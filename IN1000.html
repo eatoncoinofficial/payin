@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Receipt</title>
+    <link rel="stylesheet" href="css/css.css">
+  <style>
+    .mbCodeContent {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .copy-tip {
+      width: fit-content;
+      height: fit-content;
+      position: fixed;
+      background-color: rgba(0, 0, 0, 0.7);
+      font-size: .34rem;
+      color: #fff;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      padding: 0.3rem 0.5rem;
+      border-radius: 0.1rem;
+      z-index: 10;
+    }
+
+    .bold-text {
+      font-weight: bold;
+      color: red;
+    }
+
+    .PcPage {
+      width: 100%;
+    }
+
+    .f-money {
+      display: inline-flex;
+      flex-direction: row;
+      justify-content: center;
+      align-items: center;
+      font-size: .4rem;
+      color: #5F259F;
+    }
+
+    @media screen and (min-width: 750px) {
+
+      html,
+      body {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    .PcPage #fuck_orderNo {
+      height: 80px;
+      color: #fff;
+      line-height: 80px;
+    }
+
+    .PcPage {
+      text-align: center;
+      padding-bottom: 10px;
+    }
+
+    .PcPage .orderInfo {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .PcPage .orderInfo .infoTitle {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+    }
+
+    .PcPage .orderInfo .titleText {
+      font-size: 28px;
+      margin-right: 10px;
+    }
+
+    .PcPage .orderInfo .amount {
+      display: flex;
+      align-items: center;
+      font-size: 32px;
+      justify-content: center;
+    }
+
+    .PcPage .orderInfo .codeContent {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 40px;
+      position: relative;
+    }
+
+    .PcPage .orderInfo .codeContent .codeImg {
+      width: 260px;
+    }
+
+    .PcPage .orderInfo .paymentList {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+    }
+
+    .PcPage .orderInfo .paymentList .paymentItem {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .PcPage .orderInfo .paymentList .paymentItem .paymentIcon {
+      width: 50px;
+    }
+
+    .PcPage .orderInfo .paymentList .paymentItem .paymentName {
+      font-size: 24px;
+      margin-top: 20px;
+    }
+
+    .PcPage .orderInfo .tips {
+      width: 48%;
+      height: 150px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      font-size: 16px;
+      line-height: 28px;
+      text-align: left;
+    }
+
+    .PcPage .orderInfo .tips .tipsTitle {
+      color: #f66850;
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .PcPage .orderInfo .tips .tipsItem {
+      color: #FF7F9F;
+    }
+
+    .PcPage .orderInfo .tips .tipsItem2 {
+      color: #f66850;
+    }
+
+    .PcPage .orderInfo .notice {
+      width: 48%;
+      height: 150px;
+      border: 1px solid #ccc;
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .PcPage .orderInfo .notice .NoticeTitle {
+      font-size: 32px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .PcPage .orderInfo .notice .NoticeContent {
+      font-size: 16px;
+      line-height: 28px;
+    }
+
+    .bottomText {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .qrcode2{
+      position: absolute;
+      width: 260px;
+      height: 260px;
+      top: calc(50% - 130px);
+      left: calc(50% - 130px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .qrcode2 span {
+      border-radius: 10px;
+      width: 100%;
+      background: #000000;
+      opacity: 0.6;
+      position: absolute;
+      height: 100%;
+      left: 0;
+      top: 0;
+    }
+    .qrcode2 p {
+      font-size: 24px;
+      font-weight: 600;
+      position: relative;
+      z-index: 99;
+      color: #ffffff;
+      line-height: 28px;
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <form id="form" action="#" style="display: none;">
+    <header id="fuck_orderNo">TestPayIn20250623155302x9dpx8zk</header>
+    <div class="form-content">
+      <div>
+        <div class="f-t">
+          <p class="f-t-t1">Order amount</p>
+          <p class="f-money">
+            <b>₹</b>
+            <b id="fuck_mount">399</b>
+          </p>
+          <p class="f-timer">
+            <span id="datetime">NaN-aN-aN aN:aN</span>
+            <span id="ten-countdown" class="countdown">Time is up!</span>
+          </p>
+          <div class="mbCodeContent">
+            <div id="qrcodeMb" title="upi://pay?pa=moss1@fbl&amp;pn=MOSS SHIELDS TRADING PRIVATE LIMITED&amp;cu=INR&amp;am=399.00&amp;tn=gsVSs26"><canvas width="260" height="260" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
+            <div class="qrcode2" style="display:true">
+              <span></span>
+              <p>Code Expired</p>
+            </div>
+          </div>
+        </div>
+        <p class="tit-p1">Choose a payment method to pay</p>
+        <div class="bank-div">
+          <div class="bank-div-cont">
+
+            <ul class="bank-div-list">
+              <li id="paytm" onclick="handlePaytm()" class="yes"><img src="/img/new_tu1.png" alt=""><span></span><i><img src="/img/queren.png" alt=""></i></li>
+              <li id="phonePe" onclick="handlePayPe()"><img src="/img/new_tu2.png" alt=""><img class="scanTheCode" src="/img/scan.png" alt=""><span></span><i><img src="/img/queren.png" alt=""></i></li>
+              <li id="google" onclick="handlePayGp()"><img src="/img/new_tu3.png" alt=""><img class="scanTheCode" src="/img/scan.png" alt=""><span></span><i><img src="/img/queren.png" alt=""></i></li>
+              <li id="upi" onclick="handlePayUpi()" style="display: none;"><img src="/img/new_tu5.png" alt=""><span></span><i><img src="/img/queren.png" alt=""></i></li>
+              <li id="other" onclick="handlePayOther()" style="display: none;"><img src="/img/new_tu6.png" alt=""><span></span><i><img src="/img/queren.png" alt=""></i></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <ul class="tips1">
+        <li>1.Please make sure you have installed the app</li>
+        <li class="bold-text">2.The practical payment amount will be fluctuate, please feel free to pay</li>
+      </ul>
+      <dl class="tips2">
+        <dt>Notice:</dt>
+        <dd>Each QR code and payment link can only be paid once, please do not make repeated payments.</dd>
+      </dl>
+    </div>
+  </form>
+  <div class="PcPage" id="PcPage" style="display: block;">
+    <header id="fuck_orderNo2">TestPayIn20250623155302x9dpx8zk</header>
+    <div class="orderInfo">
+      <div class="infoTitle">
+        <div class="titleText">
+          Order Amount:
+        </div>
+        <div class="amount">
+          <div class="f-money f-money-popup">₹</div>
+          <div class="f-money f-money-popup" id="fuck_mount2">399</div>
+        </div>
+      </div>
+      <div style="font-size: 24px;margin-top: 10px;"><span id="ten-countdown2" class="countdown">Time is up!</span></div>
+      <div class="codeContent">
+        <div id="qrcodePC" title="upi://pay?pa=moss1@fbl&amp;pn=MOSS SHIELDS TRADING PRIVATE LIMITED&amp;cu=INR&amp;am=399.00&amp;tn=gsVSs26"><canvas width="260" height="260" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
+        <div class="qrcode2" style="display:true">
+          <span></span>
+          <p>Code Expired</p>
+        </div>
+      </div>
+      <div class="paymentList">
+        <div class="paymentItem">
+          <img class="paymentIcon" src="/img/Paytm.svg" alt="">
+          <span class="paymentName">Paytm</span>
+        </div>
+        <div class="paymentItem">
+          <img class="paymentIcon" src="/img/PhonePe.svg" alt="">
+          <span class="paymentName">PhonePe</span>
+        </div>
+        <div class="paymentItem">
+          <img class="paymentIcon" src="/img/Google.svg" alt="">
+          <span class="paymentName">GooglePay</span>
+        </div>
+        <div class="paymentItem">
+          <img class="paymentIcon" src="/img/Bank UPI.svg" alt="">
+          <span class="paymentName">UPI</span>
+        </div>
+      </div>
+      <div class="bottomText">
+        <div class="tips">
+          <div class="tipsTitle">Tips</div>
+          <div class="tipsItem">1.Please make sure you have installed the app</div>
+          <div class="tipsItem tipsItem2">2.The practical payment amount will be fluctuate, please feel free to pay
+          </div>
+        </div>
+        <div class="notice">
+          <div class="NoticeTitle">Notice</div>
+          <div class="NoticeContent">Each QR code and payment link can only be paid once, please do not make repeated
+            payments.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="copy-tip" style="display: none;">
+  copy sucessfully
+</div>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+  function handleResize() {
+    var sUserAgent = navigator.userAgent.toLowerCase();
+    if (/ipad|iphone|midp|rv:1.2.3.4|ucweb|android|windows ce|windows mobile/.test(sUserAgent)) {
+      document.getElementById('form').style.display = 'block';
+      document.getElementById('PcPage').style.display = 'none';
+    } else {
+      document.getElementById('form').style.display = 'none';
+      document.getElementById('PcPage').style.display = 'block';
+    }
+  }
+  handleResize()
+</script>
+<script>
+  const getUrlParams = () => {
+    const params = new URLSearchParams(window.location.search);
+    const allParams = {};
+    for (const [key, value] of params) {
+      allParams[key] = value;
+    }
+    return allParams;
+  }
+  var link = ""
+  var amount = "";
+  var orderNo = "";
+  var orderStamp = ''
+  const params = getUrlParams();
+
+  if (params.o && params.t && params.p) {
+    $.ajax({
+      url: `https://convenient-api.cpay88888.com/inr/order?o=${params.o}&p=${params.p}&t=${params.t}`,
+      method: 'get',
+      dataType: "json",
+      contentType: "application/json",
+      success: function (res) {
+        if (res && res.code === 200) {
+          $("#fuck_mount").html(res.data.detail.amount);
+          amount = res.data.detail.amount;
+          orderNo = res.data.detail.order_id;
+          $("#fuck_mount2").html(res.data.detail.amount);
+          $("#fuck_orderNo").html(res.data.detail.order_id);
+          $("#fuck_orderNo2").html(res.data.detail.order_id);
+          link = res.data.detail.link;
+          orderStamp = res.data.detail.create_at;
+          new QRCode(document.getElementById("qrcodeMb"), {
+            text: res.data.detail.qrcode_info,
+            width: 260,
+            height: 260,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+          });
+          new QRCode(document.getElementById("qrcodePC"), {
+            text: res.data.detail.qrcode_info,
+            width: 260,
+            height: 260,
+            colorDark: "#000000",
+            colorLight: "#ffffff",
+            correctLevel: QRCode.CorrectLevel.H
+          });
+          setTimeout(function () {
+            $(".qrcode2").attr("style", "display:true");
+          }, res.data.detail.duration)
+          countdown("ten-countdown", res.data.detail.duration);
+          countdown("ten-countdown2", res.data.detail.duration);
+        }
+      }
+    });
+  }
+  var dt = new Date();
+  document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "-" + (("0" + (dt.getMonth() + 1)).slice(-2)) + "-" + (("0" + dt.getDate()).slice(-2)) + " " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
+  function setCardSelectClass(type) {
+    let _li = 1;
+    switch (type) {
+      case 'paytm':
+        _li = 1;
+        break;
+      case 'phonePe':
+        _li = 2;
+        break;
+      case 'Googlepay':
+        _li = 3;
+        break;
+      case 'Mo':
+        _li = 4;
+        break;
+      case 'Upi':
+        _li = 5;
+        break;
+      case 'otherPay':
+        _li = 6;
+        break;
+      default:
+        break;
+    }
+    $(`.bank-div-list li:nth-child(${_li})`).addClass('yes').siblings().removeClass('yes')
+  }
+  function CreatePopupFun(type = true) {
+    return new Promise(function (resolve, reject) {
+      if (type) {
+
+        let qrTextUrl = "upi://" + link
+        let divAndChildred = `<div class="create-popup">
+            <div class='c-pop-mask'></div>
+            <div>
+              <div class='c-pop-hide'></div>
+              <div class="video" style="display:none">
+                <video id='myVideo' controls autoplay muted>
+                  <source src="/img/googlepay.mp4" type="video/mp4">
+                  您的浏览器不支持视频标签。
+                </video>
+              </div>
+              <div id="qrcode2"></div>
+              <ul class='pop-p'>
+                <li>1.Click the button to save the payment QR code or manually take a screenshot to save the QR code</li>
+                <li>2. Return to the desktop, open GooglePay click to scan, select the album, and pay for this QR code.</li>
+              </ul>
+              <button class='ewm-btn ewm-btn-style'>Save the QR code</button>
+<!--              <button class='ewm-btn1 ewm-btn-style'>Go to GooglePay</button>-->
+            </div>
+          </div>
+          <div class='download-div'>
+            <p class="down-order"></p>
+<!--                <p class="f-money f-money-popup">-->
+<!--                  <b>₹</b>-->
+<!--                  <b id="fuck_mount2">0</b>-->
+<!--                </p>-->
+
+<!--                  <p class="f-money f-money-popup">-->
+<!--                  <b>You only need to pay ₹</b>-->
+<!--                  <b id="fuck_mount3">0</b>-->
+<!--                </p>-->
+            <div id="qrcode3"></div>
+            <p class='down-d-timer'></p>
+          </div>`
+        $('body').append(divAndChildred)
+        const _qrcode = new QRCode(document.getElementById("qrcode2"), {
+          text: qrTextUrl,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        const _qrcode2 = new QRCode(document.getElementById("qrcode3"), {
+          text: qrTextUrl,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+
+        document.querySelector(".down-order").textContent = `order：${orderNo}`
+        let down_dt = new Date();
+        document.querySelector(".down-d-timer").innerHTML = (down_dt.getFullYear()) + "-" + (("0" + (down_dt.getMonth() + 1)).slice(-2)) + "-" + (("0" + down_dt.getDate()).slice(-2)) + " " + (("0" + down_dt.getHours()).slice(-2)) + ":" + (("0" + down_dt.getMinutes()).slice(-2));
+
+        const video = document.getElementById('myVideo');
+        video.addEventListener('click', function () {
+          if (video.requestFullscreen) {
+            video.requestFullscreen();
+          } else if (video.mozRequestFullScreen) {
+            video.mozRequestFullScreen();
+          } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+          } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+          }
+        });
+
+        $('.ewm-btn').on('click', function () {
+          html2canvas(document.querySelector('.download-div')).then((canvas) => {
+
+            const imgurl = canvas.toDataURL("image/jpeg")
+            const a = document.createElement('a')
+            a.href = imgurl
+            a.download = "qrcode.png"
+            a.click()
+          })
+        })
+        $('.c-pop-mask, .c-pop-hide').on('click', function () {
+          $('.create-popup').remove()
+          $('.download-div').remove()
+        })
+        resolve("Success")
+      } else {
+        reject()
+      }
+    })
+  }
+  function CreatePopupFunPhonePe(type = true) {
+    return new Promise(function (resolve, reject) {
+      if (type) {
+        let qrTextUrl = "upi://" + link
+        let divAndChildred = `<div class="create-popup">
+            <div class='c-pop-mask'></div>
+            <div>
+              <div class='c-pop-hide'></div>
+              <div class="video"  style="display:none">
+                <video id='myVideo' controls autoplay muted>
+                  <source src="/img/india_video.mp4" type="video/mp4">
+                  您的浏览器不支持视频标签。
+                </video>
+              </div>
+              <div id="qrcode2"></div>
+              <ul class='pop-p'>
+                <li>1.Click the button to save the payment QR code or manually take a screenshot to save the QR code</li>
+                <li>2.Open PhonePe and scan this QR code</li>
+              </ul>
+              <button class='ewm-btn ewm-btn-style'>Save the QR code</button>
+            </div>
+          </div>
+          <div class='download-div'>
+            <p class="down-order"></p>
+<!--                <p class="f-money f-money-popup">-->
+<!--                  <b>₹</b>-->
+<!--                  <b id="fuck_mount2">0</b>-->
+<!--                </p>-->
+
+<!--                 <p class="f-money f-money-popup">-->
+<!--                  <b>You only need to pay ₹</b>-->
+<!--                  <b id="fuck_mount3">0</b>-->
+<!--                </p>-->
+            <div id="qrcode3"></div>
+            <p class='down-d-timer'></p>
+          </div>`
+        $('body').append(divAndChildred)
+        const _qrcode = new QRCode(document.getElementById("qrcode2"), {
+          text: qrTextUrl,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        const _qrcode2 = new QRCode(document.getElementById("qrcode3"), {
+          text: qrTextUrl,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        document.querySelector(".down-order").textContent = `order：${orderNo}`
+        let down_dt = new Date();
+        document.querySelector(".down-d-timer").innerHTML = (down_dt.getFullYear()) + "-" + (("0" + (down_dt.getMonth() + 1)).slice(-2)) + "-" + (("0" + down_dt.getDate()).slice(-2)) + " " + (("0" + down_dt.getHours()).slice(-2)) + ":" + (("0" + down_dt.getMinutes()).slice(-2));
+        const video = document.getElementById('myVideo');
+        video.addEventListener('click', function () {
+          if (video.requestFullscreen) {
+            video.requestFullscreen();
+          } else if (video.mozRequestFullScreen) {
+            video.mozRequestFullScreen();
+          } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+          } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+          }
+        });
+        $('.ewm-btn').on('click', function () {
+          let data_type = $(this).attr('data-type')
+          if (data_type && data_type === '1') {
+            setTimeout(function () {
+              location.href = "phonepe://scan?time=3242432";
+            }, 500)
+            return
+          }
+          $(this).html(`Go to PhonePe Scan(<i class='down-timer-text'></i>)`).addClass('download-bg').attr('data-type', '1')
+          html2canvas(document.querySelector('.download-div')).then((canvas) => {
+            const imgurl = canvas.toDataURL("image/jpeg")
+            const a = document.createElement('a')
+            a.href = imgurl
+            a.download = "qrcode.png"
+            a.click()
+          })
+          setTimeout(function () {
+            location.href = "phonepe://scan?time=3242432";
+
+            $('.create-popup').remove()
+            $('.download-div').remove()
+          }, 9500)
+        })
+        $('.c-pop-mask, .c-pop-hide').on('click', function () {
+          $('.create-popup').remove()
+          $('.download-div').remove()
+        })
+        resolve("Success")
+      } else {
+        reject()
+      }
+    })
+  }
+
+  function CreatePopupFunGp(type = true) {
+    return new Promise(function (resolve, reject) {
+      if (type) {
+        let qrTextUrl = "upi://" + link
+        let divAndChildred = `<div class="create-popup">
+            <div class='c-pop-mask'></div>
+            <div>
+              <div class='c-pop-hide'></div>
+<!--              <div class="video">-->
+<!--                <video id='myVideo' controls autoplay muted>-->
+<!--                  <source src="/img/india_video.mp4" type="video/mp4">-->
+<!--                  您的浏览器不支持视频标签。-->
+<!--                </video>-->
+<!--              </div>-->
+              <div id="qrcode2"></div>
+              <ul class='pop-p'>
+                <li>1.Click the button to save the payment QR code or manually take a screenshot to save the QR code</li>
+                <li>2. Return to the desktop, open Google Pay, click to scan, select the album, and pay for this QR code.</li>
+              </ul>
+              <button class='ewm-btn ewm-btn-style'>Save the QR code</button>
+            </div>
+          </div>
+          <div class='download-div'>
+            <p class="down-order"></p>
+<!--                <p class="f-money f-money-popup">-->
+<!--                  <b>₹</b>-->
+<!--                  <b id="fuck_mount2">0</b>-->
+<!--                </p>-->
+
+<!--                 <p class="f-money f-money-popup">-->
+<!--                  <b>You only need to pay ₹</b>-->
+<!--                  <b id="fuck_mount3">0</b>-->
+<!--                </p>-->
+            <div id="qrcode3"></div>
+            <p class='down-d-timer'></p>
+          </div>`
+        $('body').append(divAndChildred)
+        const _qrcode = new QRCode(document.getElementById("qrcode2"), {
+          text: qrTextUrl,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        const _qrcode2 = new QRCode(document.getElementById("qrcode3"), {
+          text: qrTextUrl,
+          width: 200,
+          height: 200,
+          colorDark: "#000000",
+          colorLight: "#ffffff",
+          correctLevel: QRCode.CorrectLevel.H
+        });
+        document.querySelector(".down-order").textContent = `order：${orderNo}`
+        let down_dt = new Date();
+        document.querySelector(".down-d-timer").innerHTML = (down_dt.getFullYear()) + "-" + (("0" + (down_dt.getMonth() + 1)).slice(-2)) + "-" + (("0" + down_dt.getDate()).slice(-2)) + " " + (("0" + down_dt.getHours()).slice(-2)) + ":" + (("0" + down_dt.getMinutes()).slice(-2));
+        const video = document.getElementById('myVideo');
+        video.addEventListener('click', function () {
+          if (video.requestFullscreen) {
+            video.requestFullscreen();
+          } else if (video.mozRequestFullScreen) {
+            video.mozRequestFullScreen();
+          } else if (video.webkitRequestFullscreen) {
+            video.webkitRequestFullscreen();
+          } else if (video.msRequestFullscreen) {
+            video.msRequestFullscreen();
+          }
+        });
+        $('.ewm-btn').on('click', function () {
+          let data_type = $(this).attr('data-type')
+          if (data_type && data_type === '1') {
+            setTimeout(function () {
+
+              location.href = "gpay://upi/pay";
+            }, 500)
+            return
+          }
+          $(this).html(`Go to GooglePay Scan(<i class='down-timer-text'></i>)`).addClass('download-bg').attr('data-type', '1')
+          html2canvas(document.querySelector('.download-div')).then((canvas) => {
+            const imgurl = canvas.toDataURL("image/jpeg")
+            const a = document.createElement('a')
+            a.href = imgurl
+            a.download = "qrcode.png"
+            a.click()
+          })
+          setTimeout(function () {
+            location.href = "gpay://upi/pay";
+            $('.create-popup').remove()
+            $('.download-div').remove()
+          }, 9500)
+        })
+        $('.c-pop-mask, .c-pop-hide').on('click', function () {
+          $('.create-popup').remove()
+          $('.download-div').remove()
+        })
+        resolve("Success")
+      } else {
+        reject()
+      }
+    })
+  }
+  function handlePaytm() {
+    setTimeout(function () {
+      let payTyeLink = link.replace('pay?', 'cash_wallet?')
+      location.href = "paytmmp://" + payTyeLink + '&featuretype=money_transfer';
+    }, 500)
+    setCardSelectClass('paytm')
+  }
+
+  function handlePayPe() {
+
+    CreatePopupFunPhonePe().then(res => {
+      console.log(res)
+    }).catch(() => {
+
+      setTimeout(function () {
+        location.href = "phonepe://" + link;
+      }, 500)
+    })
+    setCardSelectClass('phonePe')
+  }
+
+  function handlePayGp() {
+
+    CreatePopupFun().then(res => {
+      console.log(res)
+    }).catch(() => {
+
+    })
+    setCardSelectClass('Googlepay')
+  }
+
+  function handlePayMo() {
+
+    setTimeout(function () {
+      location.href = "upi://" + link;
+    }, 500)
+    setCardSelectClass('Mo')
+  }
+
+  function handlePayUpi() {
+
+    setTimeout(function () {
+      location.href = "upi://" + link;
+    }, 500)
+    setCardSelectClass('Upi')
+  }
+
+  function handlePayOther() {
+
+    setTimeout(function () {
+      location.href = "upi://" + link;
+    }, 500)
+    setCardSelectClass('otherPay')
+  }
+
+  function handleOtherPay(pay) {
+
+    setTimeout(function () {
+      location.href = pay + "://" + link;
+    }, 500)
+  }
+
+  function uploadUTR() {
+    let copyStr = document.getElementById("fuck_utr").value
+    $.ajax({
+      url: "/orders/orders/upUtr/" + orderNo,
+      type: "POST",
+      dataType: "json",
+      data: { utr: copyStr },
+      success: function (data) {
+        switch (data.code) {
+          case 0:
+            alert("Submit success is correct")
+            break;
+          default:
+            alert("Fail " + data.msg)
+            break;
+        }
+      },
+      error: function (e) {
+        showError("network connection error");
+      },
+    });
+  }
+
+  var complaintsStatus = "0";
+  var cash = "paytm,phonePe,google,mobiKwik";
+  var nowCash = ['paytm', 'phonePe', 'google', 'mobiKwik', 'upi', 'other']
+  var timeInterval;
+  var loadSuccessTime;
+  var endMinute = 5
+
+  function countdown(elementName, duration) {
+    var element, endTime, hours, mins, msLeft, time;
+
+    function twoDigits(n) {
+      return (n <= 9 ? "0" + n : n);
+    }
+
+    function updateTimer() {
+      msLeft = endTime - (+new Date);
+      if (msLeft < 1000) {
+        element.innerHTML = "Time is up!";
+      } else {
+        time = new Date(msLeft);
+        hours = time.getUTCHours();
+        mins = time.getUTCMinutes();
+        element.innerHTML = (hours ? hours + ':' + twoDigits(mins) : mins) + ':' + twoDigits(time.getUTCSeconds());
+        setTimeout(updateTimer, 1000);
+
+      }
+    }
+    element = document.getElementById(elementName);
+    endTime = new Date().getTime() + duration;
+    updateTimer();
+  }
+
+  $(function () {
+    if (typeof (cash) == 'string') {
+      cash = cash.split(',')
+    }
+    if (Array.isArray(cash)) {
+      for (let i = 0; i < nowCash.length; i++) {
+        let item = nowCash[i]
+        if (cash.indexOf(item) == -1) {
+          document.getElementById(item).style.display = 'none'
+        }
+      }
+    }
+    document.getElementById("fuck_mount").textContent = amount
+    document.getElementById("fuck_orderNo").textContent = orderNo
+    document.getElementById("mailTo")?.setAttribute('href', `mailto:onlinehelpdesk24hr@gmail.com?subject=Ask Help,OrderID: ${orderNo}`)
+    var dt = new Date(orderStamp);
+    document.getElementById("datetime").innerHTML = (dt.getFullYear()) + "-" + (("0" + (dt.getMonth() + 1)).slice(-2)) + "-" + (("0" + dt.getDate()).slice(-2)) + " " + (("0" + dt.getHours()).slice(-2)) + ":" + (("0" + dt.getMinutes()).slice(-2));
+    clearInterval(timeInterval);
+    timeInterval = setInterval(() => {
+      let stamp = new Date().getTime()
+      if (stamp > orderStamp + endMinute * 60 * 1000) {
+        clearInterval(timeInterval);
+      }
+    }, 1000 * 15)
+    $(".as").css({ 'display': 'block' })
+    loadSuccessTime = Date.now()
+    // clickPay('open')
+    $('.popup-wt').on('click', () => {
+      window.location.href = `phonepe://native?id=externalLinkWebView&title=complaints&shouldShowToolBar=1&shouldShowProgressWhileLoading=false&url=${location.origin}/708`
+      setTimeout(function () {
+        location.href = '/708'
+      }, 800)
+    })
+    if (complaintsStatus.toString() == '0') {
+      // document.getElementById('compBtn')?.style.display = ''
+    }
+  })
+</script>
+</body>
+</html>
